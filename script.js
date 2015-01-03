@@ -1,13 +1,9 @@
-var supportTouch = $.support.touch,
-            scrollEvent = "touchmove scroll",
-            touchStartEvent = supportTouch ? "touchstart" : "mousedown",
-            touchStopEvent = supportTouch ? "touchend" : "mouseup",
-            touchMoveEvent = supportTouch ? "touchmove" : "mousemove";
+
     $.event.special.swipeupdown = {
         setup: function() {
             var thisObject = this;
             var $this = $(thisObject);
-            $this.bind(touchStartEvent, function(event) {
+            $this.bind("touchstart", function(event) {
                 var data = event.originalEvent.touches ?
                         event.originalEvent.touches[ 0 ] :
                         event,
@@ -36,9 +32,9 @@ var supportTouch = $.support.touch,
                     }
                 }
                 $this
-                        .bind(touchMoveEvent, moveHandler)
-                        .one(touchStopEvent, function(event) {
-                    $this.unbind(touchMoveEvent, moveHandler);
+                        .bind("touchmove", moveHandler)
+                        .one("touchend", function(event) {
+                    $this.unbind("touchmove", moveHandler);
                     if (start && stop) {
                         if (stop.time - start.time < 1000 &&
                                 Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
@@ -84,28 +80,28 @@ $(document).ready( function() {
 	timer = setInterval(function() {
 		moveSnake(currentDirection);
 	}, 200);
-	$("body").on("swipeleft", function(e) {
+	$(document).on("swipeleft", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		currentDirection = directions.left; 
 	});	
-	$("body").on("swiperight", function(e) {
+	$(document).on("swiperight", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		currentDirection = directions.right; 
 	});
-	$("body").on("swipeup", function(e) {
+	$(document).on("swipeup", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		currentDirection = directions.up; 
 	});
-	$("body").on("swipedown", function(e) {
+	$(document).on("swipedown", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		currentDirection = directions.down; 
 	});	
 
-	//
+	
 	$(document).keyup(function (event) {
 		switch(event.which) {
 			case 37: currentDirection = directions.left; break; //left 
@@ -216,7 +212,8 @@ function checkSnake() {
 function crash() {
 	$("#field").children('.snake').remove();
 	clearInterval(timer);
-	alert("CRASH!!!");
+	//alert("CRASH!!!");
+	$("#popup").animate({opacity: 1}).delay(1000).animate({opacity: 0}, 400, function() {
 	currentDirection = directions.right;
 
 	createSnake();
@@ -226,6 +223,7 @@ function crash() {
 	}, 200);
 	points = 0;
 	$("#points").text(0);
+});
 }
 function getRandomInt(min, max)
 {
