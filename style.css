@@ -1,5 +1,8 @@
 body {
 	text-align: center;
+	
+	overflow: auto !important;
+	-webkit-overflow-scrolling: none !important;
 }
 #field {
 	position: relative; 

@@ -19,6 +19,23 @@ $(document).ready( function() {
 	timer = setInterval(function() {
 		moveSnake(currentDirection);
 	}, 200);
+	$(document).on("swipeleft", function(e) { 
+		e.preventDefault();
+		e.stopPropagation();
+		currentDirection = directions.left; });	
+	$(document).on("swiperight", function(e) { 
+		e.preventDefault();
+		e.stopPropagation();
+		currentDirection = directions.right; });
+	$(document).on("swipeup", function(e) { 
+		e.preventDefault();
+		e.stopPropagation();
+		currentDirection = directions.up; });
+	$(document).on("swipedown", function(e) { 
+		e.preventDefault();
+		e.stopPropagation();
+		currentDirection = directions.down; });	
+
 	$(document).keyup(function (event) {
 		switch(event.which) {
 			case 37: currentDirection = directions.left; break; //left 
