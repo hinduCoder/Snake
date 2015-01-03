@@ -12,18 +12,19 @@ var directions = {
 	up: 2
 }
 var currentDirection = directions.right;
+var previousDirection = null;
 $(document).ready( function() {
 	createSnake();
 	updateFood();
 	timer = setInterval(function() {
 		moveSnake(currentDirection);
-	}, 400);
+	}, 200);
 	$(document).keyup(function (event) {
 		switch(event.which) {
-			case 37: moveSnake(directions.left); break; //left 
-			case 38: moveSnake(directions.up); break; //up
-			case 39: moveSnake(directions.right); break; //right
-			case 40: moveSnake(directions.down); break; //down
+			case 37: currentDirection = directions.left; break; //left 
+			case 38: currentDirection = directions.up; break; //up
+			case 39: currentDirection = directions.right; break; //right
+			case 40: currentDirection = directions.down; break; //down
 		}
 	});
 	
@@ -71,7 +72,10 @@ function addSnakePart() {
 	updateSnake();
 }
 function moveSnake(direction) {
-	if (direction + currentDirection == 0) return;
+	if (direction + previousDirection == 0) {
+		currentDirection = previousDirection; //TODO: refactor variable/parameter
+		return;
+	}
 	var prev = null;
 	var currentAction = null;
 	for (var i = 0; i < snake.length; i++) {
@@ -102,7 +106,7 @@ function moveSnake(direction) {
 		currentAction();
 		
 	}
-	currentDirection = direction;
+	previousDirection = direction;
 	checkSnake();
 	updateSnake();
 }
@@ -132,7 +136,7 @@ function crash() {
 	updateFood();
 	timer = setInterval(function() {
 		moveSnake(currentDirection);
-	}, 400);
+	}, 200);
 	points = 0;
 	$("#points").text(0);
 }
