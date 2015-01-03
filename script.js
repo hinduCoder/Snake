@@ -42,16 +42,15 @@ function createSnake() {
 	snake.push({x: snake[1].x-1, y: snake[1].y});
 	for (var i = 0; i < snake.length; i++) {
 		var newSnakePart = $("<div></div>");
-		var className = 'n'+i;
-		newSnakePart.addClass(className);
 		newSnakePart.addClass("snake");
 		$("#field").append(newSnakePart);
 	}
 	updateSnake();
 }
 function updateSnake() {
-	for (var i = 0; i < snake.length; i++) {
-		$(".n"+i).css({"top": snake[i].y*10, "left": snake[i].x*10});
+	var elements = $("#field").children('.snake');
+	for (var i = 0; i < elements.length; i++) {
+		$(elements[i]).css({"top": snake[i].y*10, "left": snake[i].x*10});
 	}
 }
 function addSnakePart() {
@@ -66,8 +65,7 @@ function addSnakePart() {
 	}
 	snake.push(newPart);
 	var newSnakePart = $("<div></div>");
-	var className = 'n'+(snake.length-1);
-	newSnakePart.addClass(className);
+
 	newSnakePart.addClass("snake");
 	$("#field").append(newSnakePart);
 	updateSnake();
@@ -125,9 +123,7 @@ function checkSnake() {
 	}
 }
 function crash() {
-	for (var i = 0; i < snake.length; i++) {
-		$(".n"+i).remove();
-	};
+	$("#field").children('.snake').remove();
 	clearInterval(timer);
 	alert("CRASH!!!");
 	currentDirection = directions.right;
