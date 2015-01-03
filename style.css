@@ -1,0 +1,30 @@
+body {
+	text-align: center;
+}
+#field {
+	position: relative; 
+	border: 1px solid black;
+	width: 500px; 
+	height: 500px;
+	margin: 0 auto;
+}
+.food {
+	background-color: red;
+	width: 10px;
+	height: 10px;
+	display: none;
+	position: absolute;
+}
+
+.snake {
+	background-color: blue;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+}
+#points {
+	font-size: 40pt;
+	margin-top: 0px;
+	position: relative;
+	/*display: none; //TODO*/
+}
